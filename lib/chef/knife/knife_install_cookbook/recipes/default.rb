@@ -20,7 +20,7 @@
 
 # Get the :intall_recipes list and save it to a permanent attribute.  This is in a ruby_block so that it runs
 # during execute phase, that way :intall_recipes is complete since it is populated during compile phase.  Once
-# this has been placed in an attribute, the end-of-run node.save will save it so that knife audit can get
+# this has been placed in an attribute, the end-of-run node.save will save it so that knife install   can get
 # the node's full runlist from the chef server.
 
 ruby_block "get_installed_recipes" do

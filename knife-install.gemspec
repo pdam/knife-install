@@ -1,20 +1,19 @@
-# -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "knife-install/version"
+$:.unshift(File.dirname(__FILE__) + '/lib')
+require 'chef_fs/version'
 
 Gem::Specification.new do |s|
-  s.name        = "knife-install"
-  s.version     = Knife::Install::VERSION
-  s.authors     = ["P Dam"]
-  s.email       = ["pdam.2010@gmail.com"]
-  s.homepage    = "https://github.com/pdam/knife-install"
-  s.summary     = %q{A Chef plugin for determining which cookbooks are in use on which nodes of your Chef server or Opscode organization.}
-  s.description = %q{Allows you to safely maintain a chef cookbook set by determining which cookbooks are currently in use by nodes (included in node runlists).}
+  s.name = "knife-install"
+  s.version = "0.0.1" 
+  s.platform = Gem::Platform::RUBY
+  s.has_rdoc = true
+  s.extra_rdoc_files = ["README.rdoc" ]
+  s.summary = "Universal knife verbs like  install  which  short circuits  and  the   chef  server  client  mechanisms "
+  s.description = s.summary
+  s.author = "Pratik  Dam"
+  s.email = "pdam.2010@gmail.com"
+  s.homepage = "http://www.limepeper.co.uk"
 
-  s.rubyforge_project = "knife-install"
-
-  s.files         = `git ls -files `.split("\n")
-  s.test_files    = `git ls -files  -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls -files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ["lib"]
+  s.require_path = 'lib'
+  s.files = %w( README.rdoc Rakefile) + Dir.glob("{lib,spec}/**/*")
 end
+

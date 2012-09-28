@@ -17,8 +17,8 @@
 
 require 'chef/knife'
  
-module \Install
-  class \Install < Chef::Knife
+module Install
+  class Install < Chef::Knife
  
     deps do
       require 'chef/cookbook_loader'
@@ -94,7 +94,8 @@ module \Install
         cookbook_list	= {}
         display_cookbooks.each do |cookbook_name|
           api_endpoint	= env ? "/environments/#{env}/cookbooks/#{cookbook_name}" : "cookbooks/#{cookbook_name}"
-          begin
+          print   api_endpoint.to_s
+	  begin
             cookbook_list.merge!(rest.get_rest(api_endpoint))
           rescue
             ui.error("Cookbook #{cookbook_name} could not be found on the server!")
