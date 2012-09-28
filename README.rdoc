@@ -49,7 +49,7 @@ See the `knife node run_list NODE -h` for an example of providing a list of reci
 
 == LICENSE:
 
-Author:: thoughtworks
+Author:: Pratik  Dam
 Author:: Tom Hodder
 Copyright:: Lime Pepper Ltd
 License::  Apache License, Version 2.0
