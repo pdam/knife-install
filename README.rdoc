@@ -47,6 +47,27 @@ See the `knife node run_list NODE -h` for an example of providing a list of reci
 
   knife node run_list add NODE 'role[chef-client],recipe[getting-started],recipe[chef-client::service]' type syntax
 
+
+=== GUTS / INTERNALS
+
+The  installaton of the    cookbook   is   achieved   by  interfacing to  the    chef Server using  the REST  API to  fetch metaData  and  use  this  metadata   to  download the   correct  cookbooks  . 
+Chef provides powerful ways to access the API .  Below   is  a  knife   representation of   how  cookbook meta data  is fetched  and  subsequently  donloaded   to  a  directory
+
+When  a  user  specifies   a  runlist  we  do the   following : 
+  1.   Create a  ephemral node  using   
+      knife node create <ephemeral_node> (options)
+
+  2.   Pass   the   run list  as  a   string  and   let   chef  figure   it  out
+      knife  node  <ephemeral_node> runlist add  [RUNLIST]
+  
+  3.   The REST   Endpointt   /nodes/NODE_NAME/cookbooks endpoint returns the cookbook attributes, definitions, libraries and recipes that are required for this node. The response is a hash of cookbook name and <tt>Chef::CookbookVersion<tt> object.  We simply iterate over each one, and pretty print the cookbook name and the version.  
+       knife exec -E '(api.get "nodes/controller/cookbooks").each { |cb| pp cb[0] => cb[1].version }' 
+
+  4.  Pass  the  hash   containing  unique    cookbook  name  and  version   to  a   cookbook   downloader  subroutine  .This  is the standard   Signed   REST  Calls to   download   the   cookbook   files    
+
+  5. Download 
+
+
 == LICENSE:
 
 Author:: Pratik  Dam
