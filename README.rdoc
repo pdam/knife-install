@@ -53,7 +53,7 @@ See the `knife node run_list NODE -h` for an example of providing a list of reci
 The  installaton of the    cookbook   is   achieved   by  interfacing to  the    chef Server using  the REST  API to  fetch metaData  and  use  this  metadata   to  download the   correct  cookbooks  . 
 Chef provides powerful ways to access the API .  Below   is  a  knife   representation of   how  cookbook meta data  is fetched  and  subsequently  donloaded   to  a  directory
 
-When  a  user  specifies   a  runlist  we  do the   following  
+When  a  user  specifies   a  runlist  we  do the   following : 
   1.   Create a  ephemral node  using   
       knife node create <ephemeral_node> (options)
 
@@ -65,7 +65,7 @@ When  a  user  specifies   a  runlist  we  do the   following
 
   4.  Pass  the  hash   containing  unique    cookbook  name  and  version   to  a   cookbook   downloader  subroutine  .This  is the standard   Signed   REST  Calls to   download   the   cookbook   files    
 
-
+  5. Download 
 
 
 == LICENSE:
