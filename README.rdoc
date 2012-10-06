@@ -54,10 +54,10 @@ The  installaton of the    cookbook   is   achieved   by  interfacing to  the   
 Chef provides powerful ways to access the API .  Below   is  a  knife   representation of   how  cookbook meta data  is fetched  and  subsequently  donloaded   to  a  directory
 
 When  a  user  specifies   a  runlist  we  do the   following  
-  1.   Create a  ephemral node  using   <tt>knife node create <ephemeral_node> (options)</tt>
+  1.   Create a  ephemral node  using   <code>knife node create <ephemeral_node> (options)</code>
   2.   Pass   the   run list  as  a   string  and   let   chef  figure   it  out  <tt>knife  node  <ephemeral_node> runlist add  [RUNLIST]</tt>
-  3.   The REST   Endpointt   /nodes/NODE_NAME/cookbooks endpoint returns the cookbook attributes, definitions, libraries and recipes that are required for this node. The response is a hash of cookbook name and <tt>Chef::CookbookVersion<tt> object.  We simply iterate over each one, and pretty print the cookbook name and the version.  <tt>knife exec -E '(api.get "nodes/controller/cookbooks").each { |cb| pp cb[0] => cb[1].version }' </tt>
-  4.    Pass  the  hash   containing  unique    cookbook  name  and  version   to  a   cookbook   downloader  subrotine  .This  is the standard   Signed   REST  Calls to   download   the   cookbook   files    
+  3.   The REST   Endpointt   /nodes/NODE_NAME/cookbooks endpoint returns the cookbook attributes, definitions, libraries and recipes that are required for this node. The response is a hash of cookbook name and <tt>Chef::CookbookVersion<tt> object.  We simply iterate over each one, and pretty print the cookbook name and the version.  <code>knife exec -E '(api.get "nodes/controller/cookbooks").each { |cb| pp cb[0] => cb[1].version }' </code>
+  4.  Pass  the  hash   containing  unique    cookbook  name  and  version   to  a   cookbook   downloader  subrotine  .This  is the standard   Signed   REST  Calls to   download   the   cookbook   files    
 
 
 
