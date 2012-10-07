@@ -4,6 +4,7 @@ require 'chef/node'
 require 'chef/application'
 require 'chef/client'
 require 'chef/config'
+require 'json'
 require 'chef/daemon'
 require 'chef/log'
 require 'chef/rest'
@@ -39,34 +40,30 @@ class Chef
        :short => '-f',
        :long => '--force',
        :description => 'Force download over the download directory if it exists'
-     
+
 
       def run
-	@runlist_as_string = name_args[1.. -1]
-
-    	if ! @runlist_as_string.empty?
-      		ui.fatal "You must specify  a   run List "
-      		show_usage
-      		exit 1
-    	end
+	print  @name_args
 	@node =  create_ephemeral_node
-    	@run_list_expansion = @node.expand!('server')
-    	@expanded_run_list_with_versions = @run_list_expansion.recipes.with_version_constraints_strings
-	pp @node
- 	pp  @expanded_run_list_with_versions   
-	@cookbook_hash ||= rest.get_rest("nodes/#{@node.couchdb}/cookbooks").each { |cb| pp cb[0] => cb[1].version }
-	pp  @cookbook_hash
-	@cookbook_hash.each  {   |cookbook_name ,  cookbook_version  | 
+	@cookbook_hash.keys.each  {   |cookbook_name ,  cookbook_version  | 
 			 download_cookbook( cookbook_name ,  cookbook_version ) 
 		}
 	end
 
 
   	def create_ephemeral_node
-		@node_name  =  'ephemeral'+ Time.now.to_i.to_s
-    		@node ||= Chef::Node.new(@node_name)
-		@node
-  	end
+		@node_name  =  'pdam-ubuntu'  # 'ephemeral'+ Time.now.to_i.to_s
+		@node = Chef::Node.new(@node_name)
+		system(" knife node   run_list    add   #{@node_name}  #{@name_args}")
+		system( " knife exec -E '\(api.get \"nodes/#{@node_name}/cookbooks\"\).each { |cb| pp cb[0] =>  cb[1].version }'   "   )
+	        json_str  =  File.new('/tmp/cookbook.json').read
+		puts  json_str
+		arr = JSON(json_str)
+ 		line.split.each do |cookbook_name , cookbook_version|
+			 download_cookbook( cookbook_name ,  cookbook_version )
+
+		end	
+	end
 
 
  	def do_rest_call
